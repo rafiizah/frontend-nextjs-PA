@@ -1,60 +1,50 @@
 "use client";
-import { Metadata } from "next";
 import { useState, useEffect, ChangeEvent, ChangeEventHandler } from "react";
+import CheckboxNine from "@/components/Checkboxes/CheckboxNine";
+import CheckboxSix from "@/components/Checkboxes/CheckboxSix";
+import CheckboxSeven from "@/components/Checkboxes/CheckboxSeven";
+import CheckboxEight from "@/components/Checkboxes/CheckboxEight";
 import { useRouter } from "next/navigation";
+import { Metadata } from "next";
 import axios from "axios";
-import Cookies from "js-cookie";
-import FormData from "form-data";
 
 export const metadata: Metadata = {
-  title: "Form UMKM Page | SI UMKM",
-  description: "This is Form UMKM page ",
+  title: "Form Asosiasi Page | SI UMKM",
+  description: "This is Form Asosiasi page ",
   // other metadata
 };
 
-interface FormUmkmProps {
+interface FormAsosiasiProps {
   id: string; // Define the 'id' prop here
 }
 
-const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
-  //state
+const FormAsosiasi: React.FC<FormAsosiasiProps> = ({ id }) => {
   const router = useRouter();
-  const [nama_pemilik, setNama_pemilik] = useState("");
-  const [nomor_pemilik, setNomor_pemilik] = useState("");
-  const [alamat_pemilik, setAlamat_pemilik] = useState("");
+  const [namalengkap_asosiasi, setNamaLengkap_asosiasi] = useState("");
+  const [namasingkat_asosiasi, setNamaSingkat_asosiasi] = useState("");
+  const [alamat_asosiasi, setAlamat_asosiasi] = useState("");
+  const [kodepos_asosiasi, setkodePos_asosiasi] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nama_usaha, setNama_usaha] = useState("");
-  const [alamat_usaha, setAlamat_usaha] = useState("");
-  const [domisili_usaha, setDomisili_usaha] = useState("");
-  const [kodePos_usaha, setKodePos_usaha] = useState("");
-  const [email_usaha, setEmail_usaha] = useState("");
-  const [tahunBerdiri_usaha, setTahunBerdiri_usaha] = useState("");
-  const [kategori_usaha, setKategori_usaha] = useState("");
-  const [deskripsi_usaha, setDeskripsi_usaha] = useState("");
-  const [legalitas_usaha, setLegalitas_usaha] = useState("");
-  const [selectedJenisBadanUsaha, setSelectedJenisBadanUsaha] =
-    useState<string>("");
+  const [email_asosiasi, setEmail_asosiasi] = useState("");
+  const [nomor_wa_asosiasi, setNomor_wa_asosiasi] = useState("");
+  const [website_asosiasi, setWebsite_asosiasi] = useState("");
+  const [nama_pimpinan_asosiasi, setNama_pimpinan_asosiasi] = useState("");
+  const [tahun_berdiri_asosiasi, setTahun_berdiri_asosiasi] = useState("");
+  const [jenis_bidang_asosiasi, setJenis_bidang_asosiasi] = useState("");
+  const [jumlah_anggota_umkm, setJumlah_anggota_umkm] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [legalitas_asosiasi, setLegaltas_asosiasi] = useState("");
 
-  const [isCheckedOne, setIsCheckedOne] = useState<boolean>(false);
-  const [isCheckedTwo, setIsCheckedTwo] = useState<boolean>(false);
-  const [isCheckedThree, setIsCheckedThree] = useState<boolean>(false);
-  const [isCheckedFour, setIsCheckedFour] = useState<boolean>(false);
+  const [isCheckedSix, setIsCheckedSix] = useState<boolean>(false);
+  const [isCheckedSeven, setIsCheckedSeven] = useState<boolean>(false);
+  const [isCheckedEight, setIsCheckedEight] = useState<boolean>(false);
+  const [isCheckedNine, setIsCheckedNine] = useState<boolean>(false);
 
-  const handleCheckboxOneChange = () => setIsCheckedOne(!isCheckedOne);
-  const handleCheckboxTwoChange = () => setIsCheckedTwo(!isCheckedTwo);
-  const handleCheckboxThreeChange = () => setIsCheckedThree(!isCheckedThree);
-  const handleCheckboxFourChange = () => setIsCheckedFour(!isCheckedFour);
-
-  const FormData = require("form-data");
-  const axios = require("axios");
-
-  //function "handleFileChange"
-  const [image, setImage] = useState<File | null>(null); // Menggunakan tipe File untuk state image
-
-  const handleJenisBadanUsahaChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedJenisBadanUsaha(e.target.value);
-  };
+  const handleCheckboSixChange = () => setIsCheckedSix(!isCheckedSix);
+  const handleCheckboxSevenChange = () => setIsCheckedSeven(!isCheckedSeven);
+  const handleCheckboxEightChange = () => setIsCheckedEight(!isCheckedEight);
+  const handleCheckboxNineChange = () => setIsCheckedNine(!isCheckedNine);
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -70,7 +60,6 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
     }
   };
 
-  //method "storePost"
   const storePost = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -78,37 +67,36 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
     const formData = new FormData();
 
     let legalitasValues = [];
-    if (isCheckedOne) {
+    if (isCheckedSix) {
+      legalitasValues.push("Akte Pendirian");
+    }
+    if (isCheckedSeven) {
       legalitasValues.push("NPWP");
     }
-    if (isCheckedTwo) {
-      legalitasValues.push("NIB");
+    if (isCheckedEight) {
+      legalitasValues.push("AD/ART");
     }
-    if (isCheckedThree) {
-      legalitasValues.push("IUMK");
-    }
-    if (isCheckedFour) {
-      legalitasValues.push("SIUP");
+    if (isCheckedNine) {
+      legalitasValues.push("SK Kemenkumham");
     }
 
-    const legalitas_usaha = legalitasValues.join(",");
+    const legalitas_asosiasi = legalitasValues.join(",");
 
     // Menambahkan data ke FormData
-    formData.append("nama_pemilik", nama_pemilik);
-    formData.append("nomor_pemilik", nomor_pemilik);
-    formData.append("alamat_pemilik", alamat_pemilik);
+    formData.append("namalengkap_asosiasi", namalengkap_asosiasi);
+    formData.append("namasingkat_asosiasi", namasingkat_asosiasi);
+    formData.append("alamat_asosiasi", alamat_asosiasi);
+    formData.append("kodepos_asosiasi", kodepos_asosiasi);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("nama_usaha", nama_usaha);
-    formData.append("alamat_usaha", alamat_usaha);
-    formData.append("domisili_usaha", domisili_usaha);
-    formData.append("kodePos_usaha", kodePos_usaha);
-    formData.append("email_usaha", email_usaha);
-    formData.append("tahunBerdiri_usaha", tahunBerdiri_usaha);
-    formData.append("jenisbadan_usaha", selectedJenisBadanUsaha);
-    formData.append("kategori_usaha", kategori_usaha);
-    formData.append("deskripsi_usaha", deskripsi_usaha);
-    formData.append("legalitas_usaha", legalitas_usaha);
+    formData.append("email_asosiasi", email_asosiasi);
+    formData.append("nomor_wa_asosiasi", nomor_wa_asosiasi);
+    formData.append("website_asosiasi", website_asosiasi);
+    formData.append("nama_pimpinan_asosiasi", nama_pimpinan_asosiasi);
+    formData.append("tahun_berdiri_asosiasi", tahun_berdiri_asosiasi);
+    formData.append("jenis_bidang_asosiasi", jenis_bidang_asosiasi);
+    formData.append("jumlah_anggota_umkm", jumlah_anggota_umkm);
+    formData.append("legalitas_asosiasi", legalitas_asosiasi);
 
     // Menambahkan data gambar ke FormData
     if (image) {
@@ -118,7 +106,7 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:8000/api/pemilik",
+      url: "http://localhost:8000/api/asosiasi",
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -130,12 +118,13 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
       .then((response: any) => {
         console.log(JSON.stringify(response.data));
         console.log(response);
-        router.push(`/dashboardUmkm/${response.data.user.id}`);
+        router.push(`/dashboardAsosiasi/${response.data.asosiasi.id}`);
       })
       .catch((error: any) => {
         console.log(error);
       });
   };
+
   return (
     <>
       <div className="flex flex-col gap-10">
@@ -144,61 +133,75 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
-                UMKM Form
+                Asosiasi Form
               </h3>
             </div>
-            <form method="post">
+            <form action="post">
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Nama Pemilik
+                      Nama Lengkap Asosiasi
                     </label>
                     <input
                       type="text"
-                      placeholder="Masukkan Nama Pemilik"
-                      value={nama_pemilik}
-                      onChange={(e) => setNama_pemilik(e.target.value)}
+                      placeholder="Masukkan Nama Lemgkap Asosiasi"
+                      value={namalengkap_asosiasi}
+                      onChange={(e) => setNamaLengkap_asosiasi(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
                   </div>
 
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Nomor Hp Aktif Pemilik
+                      Nama Singkat Asosiasi
                     </label>
                     <input
-                      type="number"
-                      placeholder="Masukkan  Nomer Hp Aktif Pemilik"
-                      value={nomor_pemilik}
-                      onChange={(e) => setNomor_pemilik(e.target.value)}
+                      type="text"
+                      placeholder="Masukkan Nama Singkat Asosiasi"
+                      value={namasingkat_asosiasi}
+                      onChange={(e) => setNamaSingkat_asosiasi(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
                   </div>
-                </div>
-
-                <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Alamat Pemilik
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Masukkan Alamat Pemilik"
-                    value={alamat_pemilik}
-                    onChange={(e) => setAlamat_pemilik(e.target.value)}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  />
                 </div>
 
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Email Pemilik
+                      Alamat Asosiasi
                     </label>
                     <input
-                      type="email"
-                      placeholder="Masukkan Email Pemilik"
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      type="text"
+                      placeholder="Masukkan Alamat Asosiasi"
+                      value={alamat_asosiasi}
+                      onChange={(e) => setAlamat_asosiasi(e.target.value)}
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    />
+                  </div>
+
+                  <div className="w-full xl:w-1/2">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Kode Pos Asosiasi
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan kode Pos Asosiasi"
+                      value={kodepos_asosiasi}
+                      onChange={(e) => setkodePos_asosiasi(e.target.value)}
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+                  <div className="w-full xl:w-1/2">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan Email "
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -211,7 +214,7 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                     </label>
                     <input
                       type="password"
-                      placeholder="Masukkan Password"
+                      placeholder="Masukkan password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -222,54 +225,26 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Nama Usaha
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Masukkan Nama Usaha"
-                      value={nama_usaha}
-                      onChange={(e) => setNama_usaha(e.target.value)}
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    />
-                  </div>
-
-                  <div className="w-full xl:w-1/2">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Alamat Usaha
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Masukkan Alamat usaha"
-                      value={alamat_usaha}
-                      onChange={(e) => setAlamat_usaha(e.target.value)}
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                  <div className="w-full xl:w-1/2">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Domisili Usaha
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Masukkan Domisili Usaha"
-                      value={domisili_usaha}
-                      onChange={(e) => setDomisili_usaha(e.target.value)}
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    />
-                  </div>
-
-                  <div className="w-full xl:w-1/2">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Kode Pos Usaha
+                      Nomer WA Aktif Asosiasi
                     </label>
                     <input
                       type="number"
-                      placeholder="Masukkan kode Pos Usaha"
-                      value={kodePos_usaha}
-                      onChange={(e) => setKodePos_usaha(e.target.value)}
+                      placeholder="Masukkan Nomer WA Aktif Asosiasi"
+                      value={nomor_wa_asosiasi}
+                      onChange={(e) => setNomor_wa_asosiasi(e.target.value)}
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    />
+                  </div>
+
+                  <div className="w-full xl:w-1/2">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Website Asosiasi
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan Website Asosiasi"
+                      value={website_asosiasi}
+                      onChange={(e) => setWebsite_asosiasi(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
                   </div>
@@ -277,14 +252,13 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
 
                 <div className="mb-4.5">
                   <label className="mb-2.5 block text-black dark:text-white">
-                    Email Usaha
+                    Email Asosiasi
                   </label>
                   <input
-                    type="email"
-                    placeholder="Masukkan Email Usaha"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    value={email_usaha}
-                    onChange={(e) => setEmail_usaha(e.target.value)}
+                    type="text"
+                    placeholder="Masukkan Email Asosiasi"
+                    value={email_asosiasi}
+                    onChange={(e) => setEmail_asosiasi(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
@@ -292,81 +266,76 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Tahun Berdiri Usaha
+                      Nama Pimpinan
                     </label>
                     <input
-                      type="number"
-                      placeholder="Masukkan Tahun Berdiri Usaha"
-                      value={tahunBerdiri_usaha}
-                      onChange={(e) => setTahunBerdiri_usaha(e.target.value)}
+                      type="text"
+                      placeholder="Masukkan Nama Pimpinan"
+                      value={nama_pimpinan_asosiasi}
+                      onChange={(e) =>
+                        setNama_pimpinan_asosiasi(e.target.value)
+                      }
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
                   </div>
 
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Jenis Badan Usaha
+                      Tahun Berdiri Asosiasi
                     </label>
-                    <label
-                      htmlFor="jenisBadanUsaha"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    ></label>
-                    <select
-                      id="jenisBadanUsaha"
-                      value={selectedJenisBadanUsaha}
-                      onChange={handleJenisBadanUsahaChange}
+                    <input
+                      type="number"
+                      placeholder="Masukkan Tahun Berdiri Asosiasi"
+                      value={tahun_berdiri_asosiasi}
+                      onChange={(e) =>
+                        setTahun_berdiri_asosiasi(e.target.value)
+                      }
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    >
-                      <option selected>Pilih Jenis Badan</option>
-                      <option value="Perseorangan">Perseorangan</option>
-                      <option value="PT">PT</option>
-                      <option value="CV">CV</option>
-                      <option value="UD">UD</option>
-                    </select>
+                    />
                   </div>
                 </div>
 
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Kategori Usaha
+                      Jenis Bidang Asosiasi
                     </label>
                     <input
                       type="text"
-                      placeholder="Masukkan Kategori Usaha"
-                      value={kategori_usaha}
-                      onChange={(e) => setKategori_usaha(e.target.value)}
+                      placeholder="Masukkan Jenis Bidang Asosiasi"
+                      value={jenis_bidang_asosiasi}
+                      onChange={(e) => setJenis_bidang_asosiasi(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
                   </div>
 
                   <div className="w-full xl:w-1/2">
-                    <label
-                      className=" mb-2.5 block text-black dark:text-white"
-                      htmlFor="file_input"
-                    >
-                      Unggah Gambar Umkm
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Jumlah Anggota UMKM
                     </label>
                     <input
+                      type="number"
+                      placeholder="Masukkan Jumlah Anggota UMKM"
+                      value={jumlah_anggota_umkm}
+                      onChange={(e) => setJumlah_anggota_umkm(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      id="file_input"
-                      type="file"
-                      onChange={handleFileChange}
                     />
                   </div>
                 </div>
 
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Deskripsi Usaha
+                  <label
+                    className=" mb-2.5 block text-black dark:text-white"
+                    htmlFor="file_input"
+                  >
+                    Unggah Gambar Asosiasi
                   </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Masukkan Deskripsi Usaha"
-                    value={deskripsi_usaha}
-                    onChange={(e) => setDeskripsi_usaha(e.target.value)}
+                  <input
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  ></textarea>
+                    id="file_input"
+                    type="file"
+                    onChange={handleFileChange}
+                  />
                 </div>
 
                 <div className="mb-4.5">
@@ -386,23 +355,23 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                           type="checkbox"
                           id="checkboxLabelOne"
                           className="sr-only"
-                          value={legalitas_usaha}
-                          onChange={handleCheckboxOneChange}
+                          value={legalitas_asosiasi}
+                          onChange={handleCheckboSixChange}
                         />
                         <div
                           className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                            isCheckedOne &&
+                            isCheckedSix &&
                             "border-primary bg-gray dark:bg-transparent"
                           }`}
                         >
                           <span
                             className={`h-2.5 w-2.5 rounded-sm ${
-                              isCheckedOne && "bg-primary"
+                              isCheckedSix && "bg-primary"
                             }`}
                           ></span>
                         </div>
                       </div>
-                      NPWP / Nomor Pokok Wajib Pajak
+                      Akte Pendirian
                     </label>
                   </div>
                   <div>
@@ -415,22 +384,22 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                           type="checkbox"
                           id="checkboxLabelTwo"
                           className="sr-only"
-                          onChange={handleCheckboxTwoChange}
+                          onChange={handleCheckboxSevenChange}
                         />
                         <div
                           className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                            isCheckedTwo &&
+                            isCheckedSeven &&
                             "border-primary bg-gray dark:bg-transparent"
                           }`}
                         >
                           <span
                             className={`h-2.5 w-2.5 rounded-sm ${
-                              isCheckedTwo && "bg-primary"
+                              isCheckedSeven && "bg-primary"
                             }`}
                           ></span>
                         </div>
                       </div>
-                      NIB / Nomor Induk Berusaha
+                      NPWP / Nomor Pokok Wajib Pajak
                     </label>
                   </div>
                   <div>
@@ -443,22 +412,22 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                           type="checkbox"
                           id="checkboxLabelThree"
                           className="sr-only"
-                          onChange={handleCheckboxThreeChange}
+                          onChange={handleCheckboxEightChange}
                         />
                         <div
                           className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                            isCheckedThree &&
+                            isCheckedEight &&
                             "border-primary bg-gray dark:bg-transparent"
                           }`}
                         >
                           <span
                             className={`h-2.5 w-2.5 rounded-sm ${
-                              isCheckedThree && "bg-primary"
+                              isCheckedEight && "bg-primary"
                             }`}
                           ></span>
                         </div>
                       </div>
-                      IUMK / Izin Usaha Mikro Kecil
+                      AD/ART
                     </label>
                   </div>
                   <div>
@@ -471,22 +440,22 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
                           type="checkbox"
                           id="checkboxLabelFour"
                           className="sr-only"
-                          onChange={handleCheckboxFourChange}
+                          onChange={handleCheckboxNineChange}
                         />
                         <div
                           className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                            isCheckedFour &&
+                            isCheckedNine &&
                             "border-primary bg-gray dark:bg-transparent"
                           }`}
                         >
                           <span
                             className={`h-2.5 w-2.5 rounded-sm ${
-                              isCheckedFour && "bg-primary"
+                              isCheckedNine && "bg-primary"
                             }`}
                           ></span>
                         </div>
                       </div>
-                      SIUP / Surat Izin Usaha Perdagangan
+                      SK Kemenkumham
                     </label>
                   </div>
                 </div>
@@ -507,4 +476,4 @@ const FormUmkm: React.FC<FormUmkmProps> = ({ id }) => {
   );
 };
 
-export default FormUmkm;
+export default FormAsosiasi;

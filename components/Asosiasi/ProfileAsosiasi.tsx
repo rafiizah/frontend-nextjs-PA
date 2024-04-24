@@ -1,93 +1,74 @@
 import Image from "next/image";
 import React from "react";
 
-interface getFormUmkm {
+interface FormAsosiasiData {
   id: number;
-  nama_pemilik: string;
-  nomor_pemilik: string;
-  alamat_pemilik: string;
-  nama_usaha: string;
-  alamat_usaha: string;
-  domisili_usaha: string;
-  kodePos_usaha: string;
-  email_usaha: string;
-  tahunBerdiri_usaha: string;
-  jenisbadan_usaha: string;
-  kategori_usaha: string;
+  namalengkap_asosiasi: string;
+  namasingkat_asosiasi: string;
+  alamat_asosiasi: string;
+  kodepos_asosiasi: string;
+  email_asosiasi: string;
+  nomor_wa_asosiasi: string;
+  website_asosiasi: string;
+  nama_pimpinan_asosiasi: string;
+  tahun_berdiri_asosiasi: string;
+  jenis_bidang_asosiasi: string;
+  jumlah_anggota_umkm: string;
+  legalitas_asosiasi: string;
   image: string;
-  deskripsi_usaha: string;
-  legalitas_usaha: string;
-  data: any;
+  formAsosiasiData: any;
 }
 
-const ProfileUmkm: React.FC<getFormUmkm> = ({
-  id,
-  nama_pemilik,
-  nomor_pemilik,
-  alamat_pemilik,
-  nama_usaha,
-  alamat_usaha,
-  domisili_usaha,
-  kodePos_usaha,
-  email_usaha,
-  tahunBerdiri_usaha,
-  jenisbadan_usaha,
-  kategori_usaha,
+const ProfileAsosiasi: React.FC<FormAsosiasiData> = ({
+  namalengkap_asosiasi,
+  namasingkat_asosiasi,
+  alamat_asosiasi,
+  kodepos_asosiasi,
+  email_asosiasi,
+  nomor_wa_asosiasi,
+  website_asosiasi,
+  nama_pimpinan_asosiasi,
+  tahun_berdiri_asosiasi,
+  jenis_bidang_asosiasi,
+  jumlah_anggota_umkm,
+  legalitas_asosiasi,
   image,
-  deskripsi_usaha,
-  legalitas_usaha,
 }) => {
-  console.log({ nama_pemilik });
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-10">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Profile UMKM
+              Profile Asosiasi
             </h3>
           </div>
           <div className="p-6.5">
-            <div className="mx-auto w-32 h-32 rounded-full overflow-hidden">
+            <div className="mx-auto w-50 h-50 rounded-full overflow-hidden">
               <Image
                 src={`http://localhost:8000/${image}`}
-                className="rounded-3"
+                // className="rounded-full"
                 alt={`Gambar ${image}`}
-                width={100}
-                height={100}
+                width={500}
+                height={500}
+                objectFit="cover"
               />
             </div>
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Nama Pemilik :{" "}
-                  {nama_pemilik ? nama_pemilik : "Nama Pemilik Tidak Tersedia"}
+                  Nama Lengkap Asosiasi :{" "}
+                  {namalengkap_asosiasi
+                    ? namalengkap_asosiasi
+                    : "Nama Lengkap Asosiasi Tidak Tersedia"}
                 </label>
               </div>
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Nomer Hp Aktif Pemilik :{" "}
-                  {nomor_pemilik
-                    ? nomor_pemilik
-                    : "Nomor Pemilik Tidak Tersedia"}
-                </label>
-              </div>
-            </div>
-
-            <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-              <div className="w-full xl:w-1/2">
-                <label className="mb-2.5 block text-black dark:text-white">
-                  Alamat Pemilik :{" "}
-                  {alamat_pemilik
-                    ? alamat_pemilik
-                    : "Alamat Pemilik Tidak Tersedia"}
-                </label>
-              </div>
-
-              <div className="w-full xl:w-1/2">
-                <label className="mb-2.5 block text-black dark:text-white">
-                  Nama Usaha :{" "}
-                  {nama_usaha ? nama_usaha : "Nama Usaha Tidak Tersedia"}
+                  Nama Singkat Asosiasi :{" "}
+                  {namasingkat_asosiasi
+                    ? namasingkat_asosiasi
+                    : "Nama Singkat Asosiasi Pemilik Tidak Tersedia"}
                 </label>
               </div>
             </div>
@@ -95,17 +76,19 @@ const ProfileUmkm: React.FC<getFormUmkm> = ({
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Alamat Usaha :{" "}
-                  {alamat_usaha ? alamat_usaha : "Alamat Usaha Tidak Tersedia"}
+                  Alamat Asosiasi :{" "}
+                  {alamat_asosiasi
+                    ? alamat_asosiasi
+                    : "Alamat Asosiasi Tidak Tersedia"}
                 </label>
               </div>
 
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Domisili Usaha :{" "}
-                  {domisili_usaha
-                    ? domisili_usaha
-                    : "Domisili Usaha Tidak Tersedia"}
+                  Kode Pos Asosiasi :{" "}
+                  {kodepos_asosiasi
+                    ? kodepos_asosiasi
+                    : "Kode Pos Asosiasi Tidak Tersedia"}
                 </label>
               </div>
             </div>
@@ -113,16 +96,19 @@ const ProfileUmkm: React.FC<getFormUmkm> = ({
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Kode Pos Usaha :{" "}
-                  {kodePos_usaha
-                    ? kodePos_usaha
-                    : "Kode Pos Usaha Tidak Tersedia"}
+                  Email Asosiasi :{" "}
+                  {email_asosiasi
+                    ? email_asosiasi
+                    : "Email Asosiasi Tidak Tersedia"}
                 </label>
               </div>
+
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Email Usaha :{" "}
-                  {email_usaha ? email_usaha : "Email Usaha Tidak Tersedia"}
+                  Nomor WA Asosiasi :{" "}
+                  {nomor_wa_asosiasi
+                    ? nomor_wa_asosiasi
+                    : "Nomor WA Asosiasi Tidak Tersedia"}
                 </label>
               </div>
             </div>
@@ -130,19 +116,18 @@ const ProfileUmkm: React.FC<getFormUmkm> = ({
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Tahun Berdiri Usaha :{" "}
-                  {tahunBerdiri_usaha
-                    ? tahunBerdiri_usaha
-                    : "Tahun Berdiri Usaha Tidak Tersedia"}
+                  Website Asosiasi :{" "}
+                  {website_asosiasi
+                    ? website_asosiasi
+                    : "Website Asosiasi Tidak Tersedia"}
                 </label>
               </div>
-
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Jenis Badan Usaha :{" "}
-                  {jenisbadan_usaha
-                    ? jenisbadan_usaha
-                    : "Jenis Badan Usaha Tidak Tersedia"}
+                  Nama Pimpinan Asosiasi :{" "}
+                  {nama_pimpinan_asosiasi
+                    ? nama_pimpinan_asosiasi
+                    : "Nama Pimpinan Asosiasi Tidak Tersedia"}
                 </label>
               </div>
             </div>
@@ -150,29 +135,39 @@ const ProfileUmkm: React.FC<getFormUmkm> = ({
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Kategori Usaha :{" "}
-                  {kategori_usaha
-                    ? kategori_usaha
-                    : "Kategori Usaha Tidak Tersedia"}
+                  Tahun Berdiri Asosiasi :{" "}
+                  {tahun_berdiri_asosiasi
+                    ? tahun_berdiri_asosiasi
+                    : "Tahun Berdiri Asosiasi Tidak Tersedia"}
                 </label>
               </div>
 
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Deskripsi Usaha :{" "}
-                  {deskripsi_usaha
-                    ? deskripsi_usaha
-                    : "Deskripsi Usaha Tidak Tersedia"}
+                  Jenis Bidang Asosiasi :{" "}
+                  {jenis_bidang_asosiasi
+                    ? jenis_bidang_asosiasi
+                    : "Jenis Bidang Asosiasi Tidak Tersedia"}
                 </label>
               </div>
             </div>
+
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Legalitas Usaha :{" "}
-                  {legalitas_usaha
-                    ? legalitas_usaha
-                    : "Legalitas Usaha Tidak Tersedia"}
+                  Jumalah Anggota UMKM :{" "}
+                  {jumlah_anggota_umkm
+                    ? jumlah_anggota_umkm
+                    : "Jumalah Anggota UMKM Tidak Tersedia"}
+                </label>
+              </div>
+
+              <div className="w-full xl:w-1/2">
+                <label className="mb-2.5 block text-black dark:text-white">
+                  Legalitas Asosiasi :{" "}
+                  {legalitas_asosiasi
+                    ? legalitas_asosiasi
+                    : "Legalitas Asosiasi Tidak Tersedia"}
                 </label>
               </div>
             </div>
@@ -183,4 +178,4 @@ const ProfileUmkm: React.FC<getFormUmkm> = ({
   );
 };
 
-export default ProfileUmkm;
+export default ProfileAsosiasi;

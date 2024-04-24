@@ -1,4 +1,6 @@
+import axios from "axios";
 import ProfileUmkm from "@/components/Umkm/ProfileUmkm";
+import React from "react";
 
 export async function generateStaticParams() {
   try {
@@ -21,22 +23,43 @@ export async function generateStaticParams() {
 
 async function getFormUmkm(id: any) {
   try {
-    const res = await fetch(`http://localhost:8000/api/pemilik/${id}`);
-    const data = await res.json();
+    const res = await axios.get(`http://localhost:8000/api/pemilik/${id}`);
+    const data = res.data;
+    console.log(data);
     return data;
   } catch (error) {
-    console.error("Error fetching FormUmkm:", error);
+    console.log("Error fetching FormUmkm:", error);
     return null;
   }
 }
 
-export default async function FormUmkm({ params }: { params: any }) {
+const FormUmkm: React.FC<{ params: any }> = async ({ params }) => {
   try {
-    const formUmkmData = await getFormUmkm(params.id);
+    console.log(params.id);
+    const data = await getFormUmkm(params.id);
+    console.log(data);
 
-    // Pastikan formUmkmData berisi semua properti yang diperlukan oleh ProfileUmkm
-    if (formUmkmData) {
-      return <ProfileUmkm {...formUmkmData} />;
+    if (data) {
+      return (
+        <ProfileUmkm
+          id={data.user_id}
+          nama_pemilik={data.nama_pemilik}
+          nomor_pemilik={data.nomor_pemilik}
+          alamat_pemilik={data.alamat_pemilik}
+          nama_usaha={data.nama_usaha}
+          alamat_usaha={data.alamat_usaha}
+          domisili_usaha={data.domisili_usaha}
+          kodePos_usaha={data.kodePos_usaha}
+          email_usaha={data.email_usaha}
+          tahunBerdiri_usaha={data.tahunBerdiri_usaha}
+          jenisbadan_usaha={data.jenisbadan_usaha}
+          kategori_usaha={data.kategori_usaha}
+          image={data.image}
+          deskripsi_usaha={data.deskripsi_usaha}
+          legalitas_usaha={data.legalitas_usaha}
+          data={undefined}
+        />
+      );
     } else {
       throw new Error("Data formUmkmData tidak tersedia.");
     }
@@ -44,4 +67,6 @@ export default async function FormUmkm({ params }: { params: any }) {
     console.error("Error in FormUmkm component:", error);
     return <h1>Error</h1>;
   }
-}
+};
+
+export default FormUmkm;

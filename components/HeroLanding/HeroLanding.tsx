@@ -20,7 +20,7 @@ const HeroLanding = () => {
               <a href="/form-umkm">Jadikan UMKM</a>
             </button>
             <button className="ml-4 inline-flex text-gray-700 bg-secondary hover:bg-meta-5 border-0 py-2 px-6 rounded text-lg">
-              Jadikan Asosiasi
+              <a href="/form-asosiasi">Jadikan Asosiasi</a>
             </button>
           </div>
         </div>

@@ -6,17 +6,12 @@ import axios from "axios";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Login Page | SI UMKM",
-  description: "This is login page",
-};
 
 const Login: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [validation, setValidation] = useState([]);
+  const [validation, setValidation] = useState("");
 
   //function "loginHanlder"
   const loginHandler = async (e: { preventDefault: () => void }) => {
@@ -29,30 +24,43 @@ const Login: React.FC = () => {
     formData.append("email", email);
     formData.append("password", password);
 
-    //send data to server
-    await axios
-      .post(`http://localhost:8000/api/login`, formData)
-      .then((response) => {
-        //set token on cookies
-        Cookies.set("token", response.data.token);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:8000/api/login",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    };
 
-        //redirect to dashboard
-        router.push("/");
+    axios
+      .request(config)
+      .then((response) => {
+        Cookies.set("token", response.data.token);
+        console.log(JSON.stringify(response.data));
+        console.log(response);
+        console.log(response.data.user.role_id);
+        if (response.data.user.role_id === 2) {
+          router.push(`/dashboardUmkm/${response.data.user.id}`);
+        } else if (response.data.user.role_id === 3) {
+          // Jika role adalah "asosiasi"
+          router.push(`/dashboardAsosiasi/${response.data.user.id}`);
+        }
       })
       .catch((error) => {
-        //assign error to state "validation"
-        setValidation(error.response.data);
+        console.log(error);
       });
   };
 
   //hook useEffect
-  useEffect(() => {
-    //check token
-    if (Cookies.get("token")) {
-      //redirect page dashboard
-      router.push("/");
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   //check token
+  //   if (Cookies.get("token")) {
+  //     //redirect page dashboard
+  //     router.push("/");
+  //   }
+  // }, [router]);
 
   return (
     <>

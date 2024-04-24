@@ -3,6 +3,9 @@ import axios from "axios";
 import Image from "next/image";
 
 interface Umkm {
+  nama_pemilik: string;
+  nomor_pemilik: string;
+  alamat_pemilik: string;
   nama_usaha: string;
   alamat_usaha: string;
   domisili_usaha: string;
@@ -14,16 +17,6 @@ interface Umkm {
   image: string;
   deskripsi_usaha: string;
   legalitas_usaha: string;
-  pemilik_umkm: Pemilik;
-  pemilik_id: number; // Perhatikan perubahan ini
-}
-
-interface Pemilik {
-  id: number;
-  nama_pemilik: string;
-  nomer_pemilik: string;
-  alamat_pemilik: string;
-  email: string;
 }
 
 function TableTwo() {
@@ -49,7 +42,7 @@ function TableTwo() {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5">
         <h4 className="text-xl font-semibold text-black dark:text-white">
-          Top Products
+          UMKM
         </h4>
       </div>
 
@@ -71,9 +64,6 @@ function TableTwo() {
               </th>
               <th scope="col" className="text-sm px-10 py-4">
                 Alamat Pemilik
-              </th>
-              <th scope="col" className="text-sm px-10 py-4">
-                Email Pemilik
               </th>
               <th scope="col" className="text-sm px-10 py-4">
                 Nama Usaha
@@ -124,30 +114,17 @@ function TableTwo() {
                 </td>
                 <td className="whitespace-nowrap px-8 py-4">
                   <p className="text-black dark:text-white font-normal">
-                    {item.pemilik_umkm
-                      ? item.pemilik_umkm.nama_pemilik
-                      : "Nama Pemilik Tidak Tersedia"}
+                    {item.nama_pemilik}
                   </p>
                 </td>
                 <td className="whitespace-nowrap px-8 py-4">
                   <p className="text-black dark:text-white font-normal">
-                    {item.pemilik_umkm
-                      ? item.pemilik_umkm.nomer_pemilik
-                      : "Nomor Pemilik Tidak Tersedia"}
+                    {item.nomor_pemilik}
                   </p>
                 </td>
                 <td className="whitespace-nowrap px-8 py-4">
                   <p className="text-black dark:text-white font-normal">
-                    {item.pemilik_umkm
-                      ? item.pemilik_umkm.alamat_pemilik
-                      : "Alamat Pemilik Tidak Tersedia"}
-                  </p>
-                </td>
-                <td className="whitespace-nowrap px-8 py-4">
-                  <p className="text-black dark:text-white font-normal">
-                    {item.pemilik_umkm
-                      ? item.pemilik_umkm.email
-                      : "Email Pemilik Tidak Tersedia"}
+                    {item.alamat_pemilik}
                   </p>
                 </td>
 
